@@ -230,9 +230,9 @@ Route::get('/' function()
 //views/awesome_view.php
 
 Cool stuff
-&lt;?php foreach ($stuff as $item) ?>;
-    &lt?= $item ?>;
-&lt;?php endfor ?>;
+{% foreach ($stuff as $item) %};
+    {% $item %};
+{% endfor %};
             </pre>
 
 
