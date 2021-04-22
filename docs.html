@@ -63,9 +63,11 @@
         <hr>
         <h2>Get Started</h2>
 
-        Lemon is Micro Framework which means that you can build full website app in one file, which is great for beginners. <a href="">More about Lemon</a>
+        Lemon is Micro Framework which means that you can build full website app in one file, which is great for beginners. <a href="/about.html">More about Lemon</a>
         <br>
-        Version: 1.0.2
+        Version: 1.2.0
+        <br>
+        <a href="/changelog.html">Changelog</a>
         <h3 id="installation">Installation</h3>
 
         Installation is temporary provided only by downloading folder from github repo and adding to your project folder:
@@ -175,8 +177,8 @@ Route::execute();
 
             <h3 id="templates">Template system</h3>
                 Template system is way to run html from external file with Cross Site Scripting prevention.
-
-                To start with templates, just make folder <code>views</code> in your project folder and every new template add into this folder as <code>template_name.php</code>.
+                Since version 1.2.0 Lemon has custom template syntax inspired byJinjaa.
+                To start with templates, just make folder <code>views</code> in your project folder and every new template add into this folder as <code>template_name.lemon.php</code>.
                 <br>
                 Your folder should look like this:
                 <pre><code>
@@ -196,24 +198,24 @@ Route::execute();
                 </ul>
                 <h4>Template syntax</h4>
                 <pre class="code" data-language="php">
-&lt?= $var ?> Shows variable defined in view function
+{{ $var }} Shows variable defined in view function
 
 Foreach
-&lt?php foreach($var as $var):?>
+{% foreach($var as $var): %}
 loops everything that is here
-&lt?php endfor; ?>
+{% endfor; %}
 
 If
 
-&lt?php if (condition) ?>
+{% if (condition) %}
 
-&lt?php else if (condition)?>
+{% else if (condition): %}
 
-&lt?php else ?>;
+{% else: %}
 
-&lt?php endif?>;
+{% endif; %}
             </div>
-            With <code>&lt?php ?></code> can be provided any php action.
+            With <code>{%%}</code> can be provided any php action.
 
             <h4>Example</h4>
             <pre class="code" data-language="php">
@@ -240,7 +242,7 @@ Cool stuff
            <br>
            This class has 2 arguments: (int) Error and function that is called when the error occurs.
            <br> 
-           Since version 1.0.3 Lemon supports those errors:
+           Since version 1.1.0 Lemon supports those errors:
            <ul>
                <li>404 - Not Found</li>
                <li>400 - Bad Request</li>
