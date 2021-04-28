@@ -86,11 +86,11 @@ pre.code .var {
 
 pre.code .kwd,
 pre.code .kwd span {
-	color: #070;
+	color: #C678DD;
 }
 pre.code .com,
 pre.code .com span {
-	color:#008;
+	color:#403f3f;
 	font-style: italic;
 	font-weight: normal;
 }
@@ -106,14 +106,14 @@ pre.code .pln {
 	color: #ABB2BF;
 }
 pre.code .tag {
-	color: #008;
+	color: #BC5574;
 	font-weight: bold;
 }
 pre.code .atn {
-	color: #606;
+	color: #BF835F;
 }
 pre.code .atv {
-	color: #080;
+	color: #9DCF87;
 }
 pre.code .dec {
 	color: #606;

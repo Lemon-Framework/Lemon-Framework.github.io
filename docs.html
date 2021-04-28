@@ -51,6 +51,8 @@
                         <li><a href="#routing">Routing</a></li>
                         <li><a href="#templates">Template system</a></li>
                         <li><a href="#errors">Error handling</a></li>
+                        <li><a href="#session">Session</a></li>
+                        <li><a href="#csrf">CSRF protection</a></li>
                         <li><a href="#utils">Utils</a></li>
                     </ul>
                 </details>
@@ -198,7 +200,7 @@ Route::execute();
                 </ul>
                 <h4>Template syntax</h4>
                 <pre class="code" data-language="php">
-{{ $var }} Shows variable defined in view function
+{= $var =} Shows variable defined in view function
 
 Foreach
 {% foreach($var as $var): %}
@@ -259,7 +261,52 @@ Route::handler(400, function ()
         echo "Bad request on page".$_SERVER["REQUEST_URI"];
     });
            </pre>
+
+           <h3 id="session">Session</h3>
+           Class Session provides you to make session actions through static methods:
+
+           <ul>
+               <li>::setName(string name) - sets name of the session.</li>
+               <li>::start - starts the session.</li>
+           </ul>
+           To make it work, you need to put it on the top of your app.
            
+           <h3 id="csrf">CSRF protection</h3>
+           Lemon provides CSRF protection by class CSRF:
+
+           <ul>
+               <li>::setToken - creates unique token to every page visitor, should be on the top of the page</li>
+               <li>::getToken - gets you token (made for template @csrf)</li>
+               <li>::check - check you if valid csrf token was send - should be on the top of your route</li>
+           </ul>
+           To make it work, you need to start <a href="#session">session</a><br>
+           If you enable csrf protection in your route by <code>CSRF::check()</code> you need to add <code>@csrf</code> to every post form in your template.
+
+           <h4>Example</h4>
+
+           <pre class="code" data-language="php">
+//index.php           
+&lt?php
+include "lemon/framework.php"
+Session::start();
+CSRF::setToken();
+
+Route::any("/", function() {
+        CSRF::check();
+        view("template");
+    });
+
+Route::execute(); 
+?>                             
+</pre>
+<pre class="code" data-language="html">
+//view/template.lemon.php
+
+<form method="POST">
+@csrf
+<input type="text" name="input">
+</form>
+           </pre>
             
            <h3 id="utils">Utils</h3>
            Here are other functions that may help you building cool stuff.
@@ -269,6 +316,8 @@ Route::handler(400, function ()
            Function <code>jsonify($array)</code> makes json from array that can be fetched by request.
            <h4>Console</h4>
            Function <code>console($message, $color)</code> sends message to php console. It's mainly debug tool
+           <h4>Monkey</h4>
+           function <code>isUserMonkey()</code> returns true if user is monkey.
 
            <hr>
            Lemon micro framework built by Ten Majkl-&gt; <a href="https://github.com/TENMAJKL/Lemon">GitHub</a>
