@@ -200,7 +200,7 @@ Route::execute();
                 </ul>
                 <h4>Template syntax</h4>
                 <pre class="code" data-language="php">
-{= $var =} Shows variable defined in view function
+{{ $var }} Shows variable defined in view function
 
 Foreach
 {% foreach($var as $var): %}
@@ -248,7 +248,7 @@ Cool stuff
            <ul>
                <li>404 - Not Found</li>
                <li>400 - Bad Request</li>
-               <li>500 - Internal Server Error (Is called only when wrong template is used)</li>
+               <li>500 - Internal Server Error (Is called only when wrong template is used or when there is error in route callback)</li>
            </ul>
 
            If you won't use custom error handlers, Lemon will throw basic error.
@@ -316,8 +316,8 @@ Route::execute();
            Function <code>jsonify($array)</code> makes json from array that can be fetched by request.
            <h4>Console</h4>
            Function <code>console($message, $color)</code> sends message to php console. It's mainly debug tool
-           <h4>Monkey</h4>
-           function <code>isUserMonkey()</code> returns true if user is monkey.
+           <h4>Podvodnik</h4>
+           Function <code>isUserPodvodnik($user)</code> sends if user is podvodnik.
 
            <hr>
            Lemon micro framework built by Ten Majkl-&gt; <a href="https://github.com/TENMAJKL/Lemon">GitHub</a>
