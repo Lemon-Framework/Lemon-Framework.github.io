@@ -71,12 +71,15 @@
         <br>
         <a href="/changelog.html">Changelog</a>
         <h3 id="installation">Installation</h3>
-
-        Installation is temporary provided only by downloading folder from github repo and adding to your project folder:
-
+        
+        Installation is provided by composer <code>composer require lemon_framework/lemon:dev-master</code>
+        <br>
+        Lemon won't build your project, you need to make file index.php that will be main file of your project and then run using <code>php -S localhost:port</code>
+    
         <pre><code>
 /project_folder
-    /lemon
+    /vendor
+    /composer.json
     /index.php #here starts your app
         </code></pre>
 
@@ -85,7 +88,7 @@
         This is minimal app built using Lemon:
 
         <pre class="code" data-language="php">
-include "/lemon/framework.php";
+require "vendor/autoload.php";
 
 Route::get("/relative/(.+)/", function($var)
     {
@@ -110,7 +113,7 @@ Route::execute();
 
            <div class="border-warning p-2 mb-3 card">
 
-                On start of every app must be <code>include "lemon/framework.php";</code>
+                On start of every app must be <code>require "vendor/autoload.php";</code>
 
            </div>
 
@@ -155,7 +158,7 @@ Route::get('/dynamic/(.+)', function ($arg)
 
             <h4>Example</h4>
             <pre class="code" data-language="php">
-include "/lemon/framework.php";
+require "vendor/autoload.php";
 
 Route::get('/get', function()
     {
@@ -185,13 +188,14 @@ Route::execute();
                 Your folder should look like this:
                 <pre><code>
 /project_folder
-    /lemon
+    /vendor
+    /composer.json
     /views #Here are all the templates
-        /home.php #Example template
+        /home.lemon.php #Example template
     /index.php #main php file with all the routes
                 </code></pre>
 
-                To view template just use function <code>view(file, params)</code>
+                To view template just use function <code>view(filename, params)</code> In this function don't use the <code>.lemon.php</code>
                 <br>
                 To add variables to template add as second parameter one of those:
                 <ul>
@@ -226,14 +230,14 @@ If
 Route::get('/' function()
     {
         $stuff = ['php', 'vim', 'lemon'];
-        view('awesome_view.php', compact("stuff"));
+        view('awesome_view', compact("stuff"));
     });
 
-//views/awesome_view.php
+//views/awesome_view.lemon.php
 
 Cool stuff
 {% foreach ($stuff as $item) %};
-    {% $item %};
+    {{ $item }};
 {% endfor %};
             </pre>
 
@@ -287,7 +291,8 @@ Route::handler(400, function ()
            <pre class="code" data-language="php">
 //index.php           
 &lt?php
-include "lemon/framework.php"
+require "vendor/autoload.php";
+
 Session::start();
 CSRF::setToken();
 
@@ -317,7 +322,7 @@ Route::execute();
            <h4>Console</h4>
            Function <code>console($message, $color)</code> sends message to php console. It's mainly debug tool
            <h4>Podvodnik</h4>
-           Function <code>isUserPodvodnik($user)</code> sends if user is podvodnik.
+           Function <code>isUserPodvodnik($user)</code> returns whenever user is podvodnik.
 
            <hr>
            Lemon micro framework built by Ten Majkl-&gt; <a href="https://github.com/TENMAJKL/Lemon">GitHub</a>
