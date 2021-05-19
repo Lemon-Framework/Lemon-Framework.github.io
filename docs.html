@@ -7,7 +7,9 @@
     <link rel="shortcut icon" href="lemon.png" type="image/x-icon">
     <link rel="icon" href="lemon.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://livejs.com/live.js"></script>
     <link rel="stylesheet" href="jquery.highlight.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <style>
     
         #sidebar 
@@ -16,15 +18,63 @@
             background-image: linear-gradient(#f8f9fa, white);
         }
 
-        a {
+        @media (max-width: 767px)
+        {
+            .sidebar-active
+            {
+                overflow-x: hidden;
+                overflow-y: hidden;
+            }
+            @keyframes visible-ease
+            {
+                from {width: 15%}
+                to {width: 100%}
+            }
+            @keyframes visible-text
+            {
+                from {opacity: 0%; margin-left: -50%}
+                to {opacity: 100%}
+            }
+            #sidebar.hidden
+            {
+                width: 15%;
+                transition: 1s ease-in-out;
+            }
+
+            #sidebar.hidden>div
+            {
+                opacity: 0%;
+                margin-left: -50%;
+                transition: opacity 1s ease-in-out, margin-left 1s ease-in-out;
+            }
+            #sidebar.visible>#collapse
+            {
+                transition: 1s ease-in-out;
+            }
+            #sidebar.visible
+            {
+                opacity: 100%;
+                animation: visible-ease 1s ease-in-out;
+            }
+            #sidebar.visible>div
+            {
+                animation: visible-text 1s ease-in-out;
+            }
+
+        }
+
+        a 
+        {
             text-decoration: none;
             color: #000000;
         }
 
-        a:hover {
+        a:hover 
+        {
             color: #3e3e3e;
             transition: 0.5s ease-in-out;
         }
+
     
     </style>
 
@@ -33,12 +83,14 @@
 <body>
     
     <div class="d-flex">
-       
-        <div class="col-4 p-2 col-lg-3" id="sidebar">
-            <div class="position-fixed col-4 col-lg-3">
+     
+        <div class="p-2 col-md-3 col-lg-3 col-12 hidden " id="sidebar">
+            <h1 class="text-center sticky-top"><i class=" bi bi-justify d-lg-none d-md-none text-center" id="collapse"></i></h1>            
+
+            <div class="position-fixed col-lg-3">
             <h3>Lemon</h3>
-                <details>
-                    <summary>Get Started</summary>
+            <details>
+                <summary>Get Started</summary>
                     <ul>
                         <li><a href="#installation">Installation</a></li>
                         <li><a href="#quickstart">Quickstart</a></li>
@@ -56,10 +108,10 @@
                         <li><a href="#utils">Utils</a></li>
                     </ul>
                 </details>
-            </ul>             
+            </ul>            
             </div>
         </div>
-        <div class="mx-3 col-7 col-lg-8" style="height: 100vh">
+        <div class="mx-3 col-9 col-md-8 col-lg-8" style="height: 100vh">
         <div>
         <h1>Lemon Documentation</h1>
         <hr>
@@ -72,13 +124,13 @@
         <a href="/changelog.html">Changelog</a>
         <h3 id="installation">Installation</h3>
         
-        Installation is provided by composer <code>composer require lemon_framework/lemon:dev-master</code>
+        Installation is provided by composer <code> composer create-project lemon_framework/lemon:dev-master project-name</code>
         <br>
-        Lemon won't build your project, you need to make file index.php that will be main file of your project and then run using <code>php -S localhost:port</code>
+        Lemon won't build your project, only download framework. You need to make file index.php that will be main file of your project and then run using <code>php -S localhost:port</code>
     
         <pre><code>
 /project_folder
-    /vendor
+    /lemon
     /composer.json
     /index.php #here starts your app
         </code></pre>
@@ -88,7 +140,7 @@
         This is minimal app built using Lemon:
 
         <pre class="code" data-language="php">
-require "vendor/autoload.php";
+require "lemon/framework.php";
 
 Route::get("/relative/(.+)/", function($var)
     {
@@ -111,9 +163,9 @@ Route::execute();
         <h2>Framework reference</h2>
            Lemon from version 1.0.0 provides basic actions like routing or template system.
 
-           <div class="border-warning p-2 mb-3 card">
+           <div class="border-start border-warning border-3 p-2 mb-3 shadow-lg">
 
-                On start of every app must be <code>require "vendor/autoload.php";</code>
+                On start of every app must be <code>require "leomon/framework.php";</code>
 
            </div>
 
@@ -127,7 +179,7 @@ Route::execute();
                 <li>::post - creates route that allows only method POST</li>
                 <li>::any - creates route that allows only methods GET and POST</li>
             </ul>
-            <div class="card p-2 border-warning mb-3">
+           <div class="border-start border-warning border-3 p-2 mb-3 shadow-lg">
             Note: If you will send request that is not allowed by route it will throw response 400.
             </div>
             All those methods has 2 arguments <code>Path</code> and <code>Action</code>
@@ -136,7 +188,7 @@ Route::execute();
                 <li>Path is way to get to the route.</li>
                 <li>Action is function that is called when user visits the page.</li>
             </ul>
-            <div class="card p-2 border-warning mb-3">
+           <div class="border-start border-warning border-3 p-2 mb-3 shadow-lg">
             Class route also provides to run your app. To run just type Route::execute() on the end of the code.
             <br>
             Without this your app won't work.
@@ -158,7 +210,7 @@ Route::get('/dynamic/(.+)', function ($arg)
 
             <h4>Example</h4>
             <pre class="code" data-language="php">
-require "vendor/autoload.php";
+require "leomon/framework.php";
 
 Route::get('/get', function()
     {
@@ -188,7 +240,7 @@ Route::execute();
                 Your folder should look like this:
                 <pre><code>
 /project_folder
-    /vendor
+    /lemon
     /composer.json
     /views #Here are all the templates
         /home.lemon.php #Example template
@@ -236,9 +288,9 @@ Route::get('/' function()
 //views/awesome_view.lemon.php
 
 Cool stuff
-{% foreach ($stuff as $item) %};
-    {{ $item }};
-{% endfor %};
+{% foreach ($stuff as $item) %}
+    {{ $item }}
+{% endfor %}
             </pre>
 
 
@@ -291,7 +343,7 @@ Route::handler(400, function ()
            <pre class="code" data-language="php">
 //index.php           
 &lt?php
-require "vendor/autoload.php";
+require "lemon/framework.php";
 
 Session::start();
 CSRF::setToken();
@@ -336,8 +388,21 @@ Route::execute();
 <script>
 
 $(document).ready(function(){
-$('pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol',attribute: 'data-language'});
+    $('pre.code').highlight({source:1, zebra:1, indent:'space', list:'ol',attribute: 'data-language'});
+    $("#collapse").on('click', function(){
+        $("#sidebar").toggleClass('hidden');
+        $("#sidebar").toggleClass('visible');
+        $("body").toggleClass('sidebar-active');
+        $("html").toggleClass('sidebar-active');
+    });
+    $("a").on('click', function(){
+        $("body").toggleClass('sidebar-active');
+        $("html").toggleClass('sidebar-active');
+        $("#sidebar").toggleClass('hidden');
+        $("#sidebar").toggleClass('visible');
+    });
 });
+
 
 </script>
 
